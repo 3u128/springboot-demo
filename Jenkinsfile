@@ -1,15 +1,13 @@
 pipeline {
-    agent any
+    agent {
+    	label 'oci'
+    }
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
+
             }
         }
         stage('Deploy') {
