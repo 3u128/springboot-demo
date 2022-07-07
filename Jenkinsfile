@@ -6,13 +6,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-
+                sh 'mvn -N io.takari:maven:wrapper'
+                sh 'mvn package'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                sh 'ls target/'
             }
         }
     }
