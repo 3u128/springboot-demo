@@ -39,7 +39,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(['aws-free-tier-ubuntu20-private-key']) {
-                    sh 'scp stop-remove-start-docker-container.sh ubuntu@$PROD_IP:/home/ubuntu'
+                    sh 'scp stop-remove-start-docker-container.sh ubuntu@$PROD_IP:/home/ubuntu/jenkins/'
                     
                 }
                 
