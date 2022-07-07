@@ -14,7 +14,7 @@ pipeline {
         stage('Build maven') {
             steps {
                 sh '''
-                mvn -N io.takari:maven:wrapper'
+                mvn -N io.takari:maven:wrapper
                 mvn package
                 ls target/*.jar
                 '''
