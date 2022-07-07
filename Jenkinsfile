@@ -12,7 +12,8 @@ pipeline {
             steps {
                 sh 'mvn -N io.takari:maven:wrapper'
                 sh 'mvn package'
-                sh 'ls target/'
+                sh 'ls target/*.jar'
+
             }
         }
         stage('Deploy') {
