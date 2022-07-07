@@ -4,7 +4,7 @@ pipeline {
     }
     
     environment {
-        PROD_IP  = credentials('aws-free-tier-ubuntu20-private-key')
+        PROD_IP  = credentials('prod-ip')
         registry = "3u128/springboot-demo"
         registryCredential = 'docker-registry-credentials-id'
         dockerImage = 'springboot-demo'
