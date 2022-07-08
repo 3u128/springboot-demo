@@ -1,4 +1,6 @@
 #!/bin/bash
-sudo docker stop $(docker ps -a -q)
-sudo docker rm $(docker ps -a -q)
-sudo docker rmi $(docker images -a -q)
+DOCKER_NAME = springboot-demo
+sudo docker container stop $DOCKER_NAME
+sudo docker container rm $DOCKER_NAME
+sudo docker rmi $DOCKER_NAME
+

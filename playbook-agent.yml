@@ -1,5 +1,5 @@
 ---
-- hosts: jenkins
+- hosts: prod
   become: true
   tasks:
     - name: Install aptitude
@@ -40,15 +40,6 @@
     - name: Install Docker Module for Python
       pip:
         name: docker
-
-    - name: If follow=no, /path/to/link will become a file and be overwritten by contents of foo.conf
-      ansible.builtin.copy:
-        src: ./docker.service 
-        dest: /tmp/ # link to /path/to/file
-        follow: no
-
-    - name: change default 
-      ansible.builtin.raw: sudo env SYSTEMD_EDITOR=tee  sudo -E systemctl edit --system docker.service < /tmp/docker.service
 
     - name: restart service
       ansible.builtin.raw: sudo systemctl restart docker
