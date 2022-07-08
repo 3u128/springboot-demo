@@ -40,6 +40,13 @@
     - name: Install Docker Module for Python
       pip:
         name: docker
+    # sudo usermod -aG docker ubuntu
+    - name: Add user ubuntu to docker group
+      user:
+        name: "ubuntu"
+        groups: "docker"
+        append: yes
+
 
     - name: restart service
       ansible.builtin.raw: sudo systemctl restart docker
