@@ -42,7 +42,7 @@ pipeline {
                     sh '''
                         [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                         ssh-keyscan -t rsa,dsa $PROD_IP >> ~/.ssh/known_hosts
-                        scp stop-remove-start-docker-container.sh ubuntu@$PROD_IP:/home/ubuntu/jenkins/
+                        scp stop-remove-start-docker-container.sh ubuntu@$PROD_IP:/home/ubuntu
                         ssh ubuntu@$PROD_IP './stop-remove-start-docker-container.sh'
                     '''
                 }
