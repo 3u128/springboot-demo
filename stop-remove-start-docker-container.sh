@@ -1,6 +1,7 @@
 #!/bin/bash
-DOCKER_NAME = springboot-demo
-sudo docker container stop $DOCKER_NAME
-sudo docker container rm $DOCKER_NAME
-sudo docker rmi $DOCKER_NAME
+DOCKER_NAME=springboot-demo
+docker container stop $DOCKER_NAME
+docker container rm $DOCKER_NAME
+docker rmi $DOCKER_NAME
 
+docker run -p80:80 --name $DOCKER_NAME -d 3u128/$DOCKER_NAME
