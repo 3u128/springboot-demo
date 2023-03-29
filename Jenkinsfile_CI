@@ -15,6 +15,7 @@ pipeline {
         stage("build & SonarQube analysis") {
             steps {
                 withSonarQubeEnv('sonar') {
+                    sh 'mvn -N io.takari:maven:wrapper'
                     sh 'mvn -s settings.xml clean package sonar:sonar'
                 }
             }
