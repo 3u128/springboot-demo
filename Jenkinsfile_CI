@@ -4,22 +4,22 @@ pipeline {
     	label 'linux_oci'
     }
     
-    // environment {
-    //     SONAR_USER_TOKEN  = credentials('sonar-token')
-    //     SONAR_PASSWORD = credentials('sonar_password')
-    //     SONAR_URL = 
-    //     -Dsonar.password=$SONAR_PASSWORD
-    //     registry = "3u128/springboot-demo"
-    //     registryCredential = 'docker-registry-credentials-id'
-    //     dockerImage = 'springboot-demo'
-    // }
+    environment {
+        SONAR_USER_TOKEN  = credentials('sonar-token')
+        // SONAR_PASSWORD = credentials('sonar_password')
+        // SONAR_URL = 
+        // -Dsonar.password=$SONAR_PASSWORD
+        // registry = "3u128/springboot-demo"
+        // registryCredential = 'docker-registry-credentials-id'
+        // dockerImage = 'springboot-demo'
+    }
 
     stages {
         stage("build & SonarQube analysis") {
             steps {
                 withSonarQubeEnv('sonar') {
                     sh 'mvn -N io.takari:maven:wrapper'
-                    sh 'mvn -s settings.xml clean package sonar:sonar'
+                    sh 'mvn -s settings.xml clean package sonar:sonar -Dsonar.projectKey=springboot -Dsonar.login=$SONAR_USER_TOKEN'
                     // sh 'mvn -s settings.xml clean package sonar:sonar -Dsonar.host.url=http://jenkins.anyops.pp.ua:9000 -Dsonar.projectKey=springboot -Dsonar.login=$SONAR_USER_TOKEN'
                 }
             }
