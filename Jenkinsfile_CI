@@ -4,15 +4,15 @@ pipeline {
     	label 'linux_oci'
     }
     
-    environment {
-        // SONAR_USER_TOKEN  = credentials('sonar-token')
-        // SONAR_PASSWORD = credentials('sonar_password')
-        // SONAR_URL = 
-        // -Dsonar.password=$SONAR_PASSWORD
-        // registry = "3u128/springboot-demo"
-        // registryCredential = 'docker-registry-credentials-id'
-        // dockerImage = 'springboot-demo'
-    }
+    // environment {
+    //     SONAR_USER_TOKEN  = credentials('sonar-token')
+    //     SONAR_PASSWORD = credentials('sonar_password')
+    //     SONAR_URL = 
+    //     -Dsonar.password=$SONAR_PASSWORD
+    //     registry = "3u128/springboot-demo"
+    //     registryCredential = 'docker-registry-credentials-id'
+    //     dockerImage = 'springboot-demo'
+    // }
 
     stages {
         stage("build & SonarQube analysis") {
