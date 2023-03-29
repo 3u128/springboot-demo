@@ -1,0 +1,54 @@
+pipeline {
+    agent {
+    	label 'linux_oci'
+    }
+    
+    // environment {
+    //     PROD_IP  = credentials('prod-ip')
+    //     registry = "3u128/springboot-demo"
+    //     registryCredential = 'docker-registry-credentials-id'
+    //     dockerImage = 'springboot-demo'
+    // }
+
+    stages {
+        stage('mvn -N') {
+            steps {
+                sh '''
+                mvn -N io.takari:maven:wrapper
+                '''
+            }
+        }
+        stage("build & SonarQube analysis") {
+            node {
+                withSonarQubeEnv('sonar') {
+                    sh 'mvn clean package sonar:sonar'
+                }
+          }
+        }
+        stage('Build maven') {
+            steps {
+                sh '''
+                mvn package
+                ls target/*.jar
+                '''
+            }
+        }
+
+        // stage('Build docker') {
+        //     steps {
+        //         script {
+        //             dockerImage = docker.build registry
+        //         }
+        //     }
+        // }
+        // stage('Deploy our image') {
+        //     steps{
+        //         script {
+        //             docker.withRegistry( '', registryCredential ) {
+        //                 dockerImage.push()
+        //             }
+        //         }
+        //     }
+        // }
+    }
+}
