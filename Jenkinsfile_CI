@@ -11,13 +11,13 @@ pipeline {
     // }
 
     stages {
-        stage('mvn -N') {
-            steps {
-                sh '''
-                mvn -N io.takari:maven:wrapper
-                '''
-            }
-        }
+        // stage('mvn -N') {
+        //     steps {
+        //         sh '''
+        //         mvn -N io.takari:maven:wrapper
+        //         '''
+        //     }
+        // }
         stage("build & SonarQube analysis") {
             steps {
                 withSonarQubeEnv('sonar') {
