@@ -33,21 +33,21 @@ pipeline {
             }
         }
 
-        // stage('Build docker') {
-        //     steps {
-        //         script {
-        //             dockerImage = docker.build registry
-        //         }
-        //     }
-        // }
-        // stage('Deploy our image') {
-        //     steps{
-        //         script {
-        //             docker.withRegistry( '', registryCredential ) {
-        //                 dockerImage.push()
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Build docker') {
+            steps {
+                script {
+                    dockerImage = docker.build registry
+                }
+            }
+        }
+        stage('Deploy our image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
     }
 }
