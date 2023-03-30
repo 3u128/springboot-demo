@@ -18,9 +18,9 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar') {
                     sh 'mvn -N io.takari:maven:wrapper'
-                    sh 'mvn -s settings.xml clean package sonar:sonar   -Dsonar.projectKey=$SONAR_PROJECT \
-                                                                -Dsonar.host.url=$SONAR_URL \
-                                                                -Dsonar.login=$SONAR_USER_TOKEN'
+                    // sh 'mvn -s settings.xml clean package sonar:sonar   -Dsonar.projectKey=$SONAR_PROJECT \
+                    //                                             -Dsonar.host.url=$SONAR_URL \
+                    //                                             -Dsonar.login=$SONAR_USER_TOKEN'
                 }
             }
         }
@@ -47,7 +47,7 @@ pipeline {
                         // sh 'echo $BUILD_NUMBER'
                         // dockerImage.push ${env.BUILD_NUMBER}
                         // dockerImage.push 'latest'
-                        def customImage = docker.build("my-image:${env.BUILD_ID}")
+                        def customImage = docker.build("$registry:${env.BUILD_ID}")
                         customImage.push()
                         customImage.push('latest')
                     }
