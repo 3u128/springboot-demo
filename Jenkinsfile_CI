@@ -44,10 +44,7 @@ pipeline {
             steps{
                 script {
                     docker.withRegistry('', registryCredential) {
-                        // sh 'echo $BUILD_NUMBER'
-                        // dockerImage.push ${env.BUILD_NUMBER}
-                        // dockerImage.push 'latest'
-                        def customImage = docker.build("$registry:${env.BUILD_ID}")
+                        def customImage = docker.build("$registry:build_${env.BUILD_ID}")
                         customImage.push()
                         customImage.push('latest')
                     }
