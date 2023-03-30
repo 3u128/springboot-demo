@@ -8,9 +8,9 @@ pipeline {
         SONAR_USER_TOKEN  = credentials('sonar_springboot_token')
         SONAR_URL = 'http://jenkins.anyops.pp.ua:9000'
         SONAR_PROJECT = 'springboot-project'
-        // registry = "3u128/springboot-demo"
-        // registryCredential = 'docker-registry-credentials-id'
-        // dockerImage = 'springboot-demo'
+        registry = "3u128/springboot-demo"
+        registryCredential = 'docker-registry-credentials-id'
+        dockerImage = 'springboot-demo'
     }
 
     stages {
