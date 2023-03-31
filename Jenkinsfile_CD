@@ -21,14 +21,14 @@ pipeline {
                 expression { params.ENVIRONMENT == 'dev' }
             }
             steps {
-                // sshagent(['aws-free-tier-amzlinux']) {
-                //     sh '''
-                //         [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-                //         ssh-keyscan -t rsa,dsa $SERVER_IP_DEV >> ~/.ssh/known_hosts
-                //         scp stop-remove-start-docker-container.sh ec2-user@$SERVER_IP_DEV:/home/ec2-user
-                //         ssh ec2-user@$SERVER_IP_DEV 'sudo ./stop-remove-start-docker-container.sh'
-                //     '''
-                // }
+                sshagent(['aws-free-tier-amzlinux']) {
+                    sh '''
+                        [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                        ssh-keyscan -t rsa,dsa $SERVER_IP_DEV >> ~/.ssh/known_hosts
+                        scp stop-remove-start-docker-container.sh ec2-user@$SERVER_IP_DEV:/home/ec2-user
+                        ssh ec2-user@$SERVER_IP_DEV 'sudo ./stop-remove-start-docker-container.sh'
+                    '''
+                }
                 sh 'echo test'
             }
         }
