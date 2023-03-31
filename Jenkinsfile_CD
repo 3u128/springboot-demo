@@ -3,12 +3,12 @@ pipeline {
     	label 'linux_oci'
     }
 
-    // parameters {
-    //     string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deploy to DEV by default. Choose between QA and PROD')
-    //     // string(name: 'IP_DEV', defaultValue: '', description: 'aws tier')
-    //     // string(name: 'IP_QA', defaultValue: '', description: 'aws tier')
-    //     // string(name: 'IP_PROD', defaultValue: '', description: 'aws tier')
-    // }
+    parameters {
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Deploy to DEV by default')
+        // string(name: 'IP_DEV', defaultValue: '', description: 'aws tier')
+        // string(name: 'IP_QA', defaultValue: '', description: 'aws tier')
+        // string(name: 'IP_PROD', defaultValue: '', description: 'aws tier')
+    }
     environment {
         SERVER_IP_DEV = credentials('ip-dev')
         SERVER_IP_QA = credentials('ip-qa')
@@ -17,9 +17,9 @@ pipeline {
 
     stages {
         stage('Deploy to dev') {
-            // when {
-            //     expression { params.ENVIRONMENT = 'dev' }
-            // }
+            when {
+                expression { ${params.ENVIRONMENT} == 'dev' }
+            }
             steps {
                 // sshagent(['aws-free-tier-amzlinux']) {
                 //     sh '''
