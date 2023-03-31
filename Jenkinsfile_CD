@@ -12,7 +12,7 @@ pipeline {
     environment {
         SERVER_IP_DEV = credentials('ip-dev')
         SERVER_IP_QA = credentials('ip-qa')
-        SERVER_IP_QA = credentials('ip-prod')
+        SERVER_IP_PROD = credentials('ip-prod')
     }
 
     stages {
