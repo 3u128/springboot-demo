@@ -1,5 +1,7 @@
 pipeline {
-    label 'linux_oci'
+    agent {
+    	label 'linux_oci'
+    }
 
     parameters {
         string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deploy to DEV')
