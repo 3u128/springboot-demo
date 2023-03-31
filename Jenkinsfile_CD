@@ -9,11 +9,6 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
-            steps {
-                // perform the build step here
-            }
-        }
         stage('Deploy to dev') {
             when {
                 expression { params.ENVIRONMENT = 'dev' }
