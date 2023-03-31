@@ -4,8 +4,15 @@ pipeline {
     }
 
     parameters {
-        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deploy to DEV')
-        string(name: 'ENVIRONMENT', defaultValue: 'qa', description: 'Deploy to QA')
+        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deploy to DEV by default. Choose between QA and PROD')
+        // string(name: 'IP_DEV', defaultValue: '', description: 'aws tier')
+        // string(name: 'IP_QA', defaultValue: '', description: 'aws tier')
+        // string(name: 'IP_PROD', defaultValue: '', description: 'aws tier')
+    }
+    environment {
+        SERVER_IP_DEV = credentials('ip-dev')
+        SERVER_IP_QA = credentials('ip-qa')
+        SERVER_IP_QA = credentials('ip-prod')
     }
 
     stages {
@@ -14,9 +21,12 @@ pipeline {
                 expression { params.ENVIRONMENT = 'dev' }
             }
             steps {
-                sshagent(['aws-free-tier-ubuntu20-private-key']) {
+                sshagent(['aws-free-tier-amzlinux']) {
                     sh '''
-                        echo DEV
+                        [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                        ssh-keyscan -t rsa,dsa $SERVER_IP_DEV >> ~/.ssh/known_hosts
+                        scp stop-remove-start-docker-container.sh ec2-user@$SERVER_IP_DEV:/home/ec2-user
+                        ssh ec2-user@$SERVER_IP_DEV 'sudo ./stop-remove-start-docker-container.sh'
                     '''
                 }
             }
@@ -26,14 +36,23 @@ pipeline {
                 expression { params.ENVIRONMENT = 'qa' }
             }
             steps {
-                sshagent(['aws-free-tier-ubuntu20-private-key']) {
-                    sh '''
-                        [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-                        ssh-keyscan -t rsa,dsa $PROD_IP >> ~/.ssh/known_hosts
-                        scp stop-remove-start-docker-container.sh ubuntu@$PROD_IP:/home/ubuntu
-                        ssh ubuntu@$PROD_IP 'sudo ./stop-remove-start-docker-container.sh'
-                    '''
-                }
+                // sshagent(['aws-free-tier-amzlinux']) {
+                //     sh '''
+                //         [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                //         ssh-keyscan -t rsa,dsa $SERVER_IP_QA >> ~/.ssh/known_hosts
+                //         scp stop-remove-start-docker-container.sh ec2-user@$SERVER_IP_QA:/home/ec2-user
+                //         ssh ec2-user@$SERVER_IP_QA 'sudo ./stop-remove-start-docker-container.sh'
+                //     '''
+                // }
+                sh 'echo qa'
+            }
+        }
+        stage('Deploy to prod') {
+            when {
+                expression { params.ENVIRONMENT = 'prod' }
+            }
+            steps {
+                sh 'echo prod'
             }
         }
     }
