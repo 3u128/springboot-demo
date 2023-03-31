@@ -29,7 +29,7 @@ pipeline {
                 //         ssh ec2-user@$SERVER_IP_DEV 'sudo ./stop-remove-start-docker-container.sh'
                 //     '''
                 // }
-                sh 'echo $SERVER_IP_DEV'
+                sh 'echo test'
             }
         }
         stage('Deploy to qa') {
