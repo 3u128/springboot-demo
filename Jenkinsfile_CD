@@ -1,0 +1,43 @@
+pipeline {
+    label 'linux_oci'
+
+    parameters {
+        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Deploy to DEV')
+        string(name: 'ENVIRONMENT', defaultValue: 'qa', description: 'Deploy to QA')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                // perform the build step here
+            }
+        }
+        stage('Deploy to ${params.ENVIRONMENT}') {
+            when {
+                expression { params.ENVIRONMENT = 'dev' }
+            }
+            steps {
+                sshagent(['aws-free-tier-ubuntu20-private-key']) {
+                    sh '''
+                        echo DEV
+                    '''
+                }
+            }
+        }
+        stage('Deploy to ${params.ENVIRONMENT}') {
+            when {
+                expression { params.ENVIRONMENT = 'qa' }
+            }
+            steps {
+                sshagent(['aws-free-tier-ubuntu20-private-key']) {
+                    sh '''
+                        [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                        ssh-keyscan -t rsa,dsa $PROD_IP >> ~/.ssh/known_hosts
+                        scp stop-remove-start-docker-container.sh ubuntu@$PROD_IP:/home/ubuntu
+                        ssh ubuntu@$PROD_IP 'sudo ./stop-remove-start-docker-container.sh'
+                    '''
+                }
+            }
+        }
+    }
+}
