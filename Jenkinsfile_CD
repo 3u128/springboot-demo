@@ -14,7 +14,7 @@ pipeline {
                 // perform the build step here
             }
         }
-        stage('Deploy to ${params.ENVIRONMENT}') {
+        stage('Deploy to dev') {
             when {
                 expression { params.ENVIRONMENT = 'dev' }
             }
@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to ${params.ENVIRONMENT}') {
+        stage('Deploy to qa') {
             when {
                 expression { params.ENVIRONMENT = 'qa' }
             }
