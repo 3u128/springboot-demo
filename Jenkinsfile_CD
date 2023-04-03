@@ -30,10 +30,10 @@ pipeline {
                     '''
                 }
             }
-        }
         stage('health check') {
                 sh 'echo test'
                 sh 'curl --fail $SERVER_IP_DEV || exit 1'
+        }
         }
         // stage('Deploy to qa') {
         //     when {
@@ -59,7 +59,6 @@ pipeline {
         //         sh 'echo prod'
         //     }
         // }
-
         post {
             success {
                 sh 'echo failed'
