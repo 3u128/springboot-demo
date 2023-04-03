@@ -30,7 +30,7 @@ pipeline {
                     '''
                 }
                 sh 'echo test'
-                sh 'curl --fail $IP_DEV:8080 || exit 1' //--connect-timeout 5 -m 25 
+                sh 'curl --fail --connect-timeout 10 -m 25 $IP_DEV:8080 || exit 1'
             }
             post {
                 success {
