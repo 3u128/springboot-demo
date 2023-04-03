@@ -29,8 +29,11 @@ pipeline {
                         ssh ec2-user@$SERVER_IP_DEV 'sudo chmod +x ./stop-remove-start-docker-container.sh && ./stop-remove-start-docker-container.sh'
                     '''
                 }
-                sh 'echo test'
             }
+        }
+        stage('health check') {
+                sh 'echo test'
+                curl --fail $SERVER_IP_DEV || exit 1
         }
         // stage('Deploy to qa') {
         //     when {
@@ -56,5 +59,16 @@ pipeline {
         //         sh 'echo prod'
         //     }
         // }
+
+        post {
+            success {
+                sh 'echo failed'
+                slackSend color: "good", message: "site is up"
+                }
+            failure {
+                sh 'echo failed'
+                slackSend color: "danger", message: "site is down"
+            }
+        }
     }
 }
