@@ -5,7 +5,7 @@ pipeline {
 
     parameters {
         choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Deploy to DEV by default')
-        // string(name: 'IP_DEV', defaultValue: '', description: 'aws tier')
+        string(name: 'IP_DEV', defaultValue: '52.23.240.191', description: 'aws tier')
         // string(name: 'IP_QA', defaultValue: '', description: 'aws tier')
         // string(name: 'IP_PROD', defaultValue: '', description: 'aws tier')
     }
@@ -30,8 +30,6 @@ pipeline {
                     '''
                 }
                 sh 'echo test'
-                sh "curl $SERVER_IP_DEV:8080"
-                sh "curl --fail $SERVER_IP_DEV:8080 || exit 1"
                 sh 'curl --fail $SERVER_IP_DEV:8080 || exit 1' //--connect-timeout 5 -m 25 
             }
             post {
