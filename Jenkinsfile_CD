@@ -33,7 +33,7 @@ pipeline {
         }
         stage('health check') {
                 sh 'echo test'
-                curl --fail $SERVER_IP_DEV || exit 1
+                sh 'curl --fail $SERVER_IP_DEV || exit 1'
         }
         // stage('Deploy to qa') {
         //     when {
