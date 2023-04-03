@@ -30,7 +30,7 @@ pipeline {
                     '''
                 }
                 sh 'echo test'
-                sh 'curl --fail $SERVER_IP_DEV || exit 1'
+                sh 'curl --fail $SERVER_IP_DEV:8080 || exit 1'
             }
             post {
                 success {
