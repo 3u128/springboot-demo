@@ -3,12 +3,34 @@ pipeline {
     	label 'linux_oci'
     }
 
-    parameters {
-        choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Deploy to DEV by default')
-        string(name: 'IP_DEV', defaultValue: '54.167.225.55', description: 'aws tier')
-        // string(name: 'IP_QA', defaultValue: '', description: 'aws tier')
-        // string(name: 'IP_PROD', defaultValue: '', description: 'aws tier')
-    }
+    parameters([
+        choice(
+            name: 'ENV',
+            choices: [
+                'dev',
+                'prod'
+            ]
+        ),
+        [$class: 'ChoiceParameter',
+            choiceType: 'PT_RADIO',
+            filterLength: 1,
+            filterable: false,
+            name: 'CHOICES',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return ["Check Jenkins ScriptApproval page"]'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script: 'return ["One","Two:selected"]'
+                ]
+            ]
+        ]
+    ])
     environment {
         SERVER_IP_DEV = credentials('ip-dev')
         SERVER_IP_QA = credentials('ip-qa')
