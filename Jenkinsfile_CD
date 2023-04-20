@@ -1,8 +1,4 @@
-pipeline {
-    agent {
-    	label 'linux_oci'
-    }
-
+properties([
     parameters([
         choice(
             name: 'ENV',
@@ -31,6 +27,14 @@ pipeline {
             ]
         ]
     ])
+])
+
+
+
+pipeline {
+    agent {
+    	label 'linux_oci'
+    }
     environment {
         SERVER_IP_DEV = credentials('ip-dev')
         SERVER_IP_QA = credentials('ip-qa')
