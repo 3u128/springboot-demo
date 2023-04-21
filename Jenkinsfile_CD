@@ -2,11 +2,11 @@ pipeline {
     agent {
     	label 'linux_oci'
     }
-    environment {
-        SERVER_IP_DEV = credentials('ip-dev')
-        SERVER_IP_QA = credentials('ip-qa')
-        SERVER_IP_PROD = credentials('ip-prod')
-    }
+//    environment {
+//        SERVER_IP_DEV = credentials('ip-dev')
+//        SERVER_IP_QA = credentials('ip-qa')
+//        SERVER_IP_PROD = credentials('ip-prod')
+//    }
 
     stages {
         stage('Deploy to dev') {
