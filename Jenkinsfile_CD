@@ -9,11 +9,19 @@ pipeline {
 //    }
 
     stages {
+        stage('test') {
+          script{
+              echo 'Hello'
+              echo "${params.envs}"
+              echo "${params.environment}"
+           }
+        }
         stage('Deploy to dev') {
             when {
-                expression { params.ENVIRONMENT == 'dev' }
+                expression { params.environment == 'dev' }
             }
             steps {
+          
                 sshagent(['aws-free-tier-amzlinux']) {
                     sh '''
                         [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
