@@ -7,7 +7,7 @@ pipeline {
 //        SERVER_IP_QA = credentials('ip-qa')
 //        SERVER_IP_PROD = credentials('ip-prod')
 //    }
-
+//test hook
     stages {
         stage('test') {
             steps {
