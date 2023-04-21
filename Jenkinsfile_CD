@@ -10,11 +10,13 @@ pipeline {
 
     stages {
         stage('test') {
-          script{
-              echo 'Hello'
-              echo "${params.envs}"
-              echo "${params.environment}"
-           }
+            steps {
+              script{
+                  echo 'Hello'
+                  echo "${params.envs}"
+                  echo "${params.environment}"
+               }
+             }
         }
         stage('Deploy to dev') {
             when {
